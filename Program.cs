@@ -4,6 +4,19 @@ using LibraryManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // frontend port
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -25,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 // Optional: app.UseHttpsRedirection(); // enable if HTTPS needed
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

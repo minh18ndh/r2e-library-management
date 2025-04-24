@@ -5,7 +5,7 @@ using LibraryManagement.Interfaces;
 namespace LibraryManagement.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/books")]
 public class BooksController : ControllerBase
 {
     private readonly IBookService _bookService;
