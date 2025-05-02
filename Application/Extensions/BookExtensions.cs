@@ -15,7 +15,7 @@ public static class BookExtensions
             Description = book.Description,
             Quantity = book.Quantity,
             CategoryId = book.CategoryId,
-            CategoryName = book.Category?.Name ?? ""
+            CategoryName = book.Category?.Name ?? "Unknown"
         };
     }
 

@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
-using System.Text.Json;
 using LibraryManagement.Api.Models;
 using LibraryManagement.Domain.Exceptions;
 

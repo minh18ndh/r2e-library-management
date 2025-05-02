@@ -1,10 +1,11 @@
 using LibraryManagement.Application.DTOs.Book;
 using LibraryManagement.Application.Interfaces.Services;
-//using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagement.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/books")]
 public class BooksController : ControllerBase
@@ -30,6 +31,7 @@ public class BooksController : ControllerBase
         return Ok(book);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] BookCreateRequestDto dto)
     {
@@ -40,6 +42,7 @@ public class BooksController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, createdBook);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] BookUpdateRequestDto dto)
     {
@@ -50,6 +53,7 @@ public class BooksController : ControllerBase
         return Ok(updatedBook);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {

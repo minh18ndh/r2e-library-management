@@ -3,6 +3,7 @@ using LibraryManagement.Application.Interfaces.Repositories;
 using LibraryManagement.Application.Services;
 using LibraryManagement.Infrastructure.Repositories;
 using LibraryManagement.Infrastructure.Data;
+using LibraryManagement.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.Infrastructure;
@@ -22,6 +23,8 @@ public static class DependencyInjection
         // Services
         services.AddScoped<IBookService, BookService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }

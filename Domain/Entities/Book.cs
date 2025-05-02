@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace LibraryManagement.Domain.Entities;
 
 public class Book

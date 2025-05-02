@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using LibraryManagement.Domain.Enums;
 
 namespace LibraryManagement.Domain.Entities;

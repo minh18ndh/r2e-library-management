@@ -1,9 +1,11 @@
 using LibraryManagement.Application.DTOs.Category;
 using LibraryManagement.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagement.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/categories")]
 public class CategoriesController : ControllerBase
@@ -29,6 +31,7 @@ public class CategoriesController : ControllerBase
         return Ok(category);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CategoryCreateRequestDto dto)
     {
@@ -39,6 +42,7 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = createdCategory.Id }, createdCategory);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] CategoryUpdateRequestDto dto)
     {
@@ -49,6 +53,7 @@ public class CategoriesController : ControllerBase
         return Ok(updatedCategory);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
