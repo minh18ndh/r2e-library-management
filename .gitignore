@@ -1,0 +1,46 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio settings
+.vscode/
+.vs/
+
+# ASP.NET Core secrets
+secrets.json
+
+# .NET Core-specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Logs
+*.log
+
+# SQL Server localdb
+*.mdf
+*.ldf
+
+# Environment files
+.env
+
+# OS / IDE-specific
+Thumbs.db
+.DS_Store
+
+# Rider
+.idea/
+*.sln.iml
