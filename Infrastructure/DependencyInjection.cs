@@ -19,12 +19,14 @@ public static class DependencyInjection
         // Repositories
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IBookBorrowingRequestRepository, BookBorrowingRequestRepository>();
 
         // Services
         services.AddScoped<IBookService, BookService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IBookBorrowingRequestService, BookBorrowingRequestService>();
 
         return services;
     }

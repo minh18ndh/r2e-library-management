@@ -38,7 +38,7 @@ public class BooksController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var createdBook = await _bookService.AddAsync(dto);
+        var createdBook = await _bookService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, createdBook);
     }
 

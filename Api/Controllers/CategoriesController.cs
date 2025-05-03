@@ -38,7 +38,7 @@ public class CategoriesController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var createdCategory = await _categoryService.AddAsync(dto);
+        var createdCategory = await _categoryService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = createdCategory.Id }, createdCategory);
     }
 

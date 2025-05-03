@@ -8,5 +8,5 @@ public class BookResponseDto
     public required string Description { get; set; }
     public int Quantity { get; set; }
     public Guid CategoryId { get; set; }
-    public required string CategoryName { get; set; }
+    public string CategoryName { get; set; } = string.Empty;
 }

@@ -13,7 +13,7 @@ public class BookBorrowingRequestDetailConfiguration : IEntityTypeConfiguration<
         builder.HasOne(d => d.Book)
             .WithMany(b => b.BorrowingDetails)
             .HasForeignKey(d => d.BookId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(d => d.BookBorrowingRequest)
             .WithMany(r => r.Details)

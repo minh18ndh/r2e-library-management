@@ -9,10 +9,12 @@ namespace LibraryManagement.Application.Services;
 public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepository;
+    private readonly IBookBorrowingRequestRepository _bookBorrowingRequestRepository;
 
-    public BookService(IBookRepository bookRepository)
+    public BookService(IBookRepository bookRepository, IBookBorrowingRequestRepository bookBorrowingRequestRepository)
     {
         _bookRepository = bookRepository;
+        _bookBorrowingRequestRepository = bookBorrowingRequestRepository;
     }
 
     public async Task<IEnumerable<BookResponseDto>> GetAllAsync()
@@ -30,7 +32,7 @@ public class BookService : IBookService
         return book.ToResponseDto();
     }
 
-    public async Task<BookResponseDto> AddAsync(BookCreateRequestDto dto)
+    public async Task<BookResponseDto> CreateAsync(BookCreateRequestDto dto)
     {
         var book = dto.ToEntity();
         var createdBook = await _bookRepository.AddAsync(book);
@@ -67,9 +69,17 @@ public class BookService : IBookService
 
     public async Task<bool> DeleteAsync(Guid id)
     {
+        var book = await _bookRepository.GetByIdAsync(id);
+        if (book == null)
+            throw new NotFoundException($"Book with ID '{id}' not found");
+
+        var activeRequests = await _bookBorrowingRequestRepository.GetActiveRequestsByBookIdAsync(id);
+        if (activeRequests.Any())
+            throw new BadRequestException("Cannot delete book that is part of a pending or approved borrow request.");
+
         var success = await _bookRepository.DeleteAsync(id);
         if (!success)
-            throw new NotFoundException($"Book with ID '{id}' not found");
+            throw new Exception("Unexpected error deleting book");
 
         return true;
     }

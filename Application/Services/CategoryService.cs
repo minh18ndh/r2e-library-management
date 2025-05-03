@@ -32,7 +32,7 @@ public class CategoryService : ICategoryService
         return category.ToResponseDto();
     }
 
-    public async Task<CategoryResponseDto> AddAsync(CategoryCreateRequestDto dto)
+    public async Task<CategoryResponseDto> CreateAsync(CategoryCreateRequestDto dto)
     {
         var category = dto.ToEntity();
         var createdCategory = await _categoryRepository.AddAsync(category);
