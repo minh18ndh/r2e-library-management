@@ -18,6 +18,8 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
     public async Task<List<BookBorrowingRequest>> GetAllAsync()
     {
         return await _context.BookBorrowingRequests
+            .Include(r => r.Requestor)
+            .Include(r => r.Approver)
             .Include(r => r.Details)
                 .ThenInclude(d => d.Book)
             .AsNoTracking()
@@ -27,6 +29,8 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
     public async Task<BookBorrowingRequest?> GetByIdAsync(Guid id)
     {
         return await _context.BookBorrowingRequests
+            .Include(r => r.Requestor)
+            .Include(r => r.Approver)
             .Include(r => r.Details)
                 .ThenInclude(d => d.Book)
             .FirstOrDefaultAsync(r => r.Id == id);
@@ -36,6 +40,8 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
     {
         return await _context.BookBorrowingRequests
             .Where(r => r.RequestorId == requestorId)
+            .Include(r => r.Requestor)
+            .Include(r => r.Approver)
             .Include(r => r.Details)
                 .ThenInclude(d => d.Book)
             .AsNoTracking()

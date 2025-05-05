@@ -37,7 +37,7 @@ public class JwtService : IJwtService
             issuer: _issuer,
             audience: _audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(15),
+            expires: DateTime.UtcNow.AddMinutes(1),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -59,7 +59,7 @@ public class JwtService : IJwtService
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key)),
-            ValidateLifetime = false // ignore expiration
+            ValidateLifetime = true // expiration
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

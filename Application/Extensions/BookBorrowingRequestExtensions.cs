@@ -11,7 +11,9 @@ public static class BookBorrowingRequestExtensions
         {
             Id = request.Id,
             RequestorId = request.RequestorId,
+            RequestorName = request.Requestor?.FullName,
             ApproverId = request.ApproverId,
+            ApproverName = request.Approver?.FullName,
             DateRequested = request.DateRequested,
             Status = request.Status,
             Details = request.Details.Select(detail => new BookBorrowingRequestDetailResponseDto
