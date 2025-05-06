@@ -1,46 +1,81 @@
-# Build results
+########################
+# Build Artifacts
+########################
 bin/
 obj/
 out/
+artifacts/
+dist/
+dist-ssr/
 
-# User-specific files
+########################
+# User-Specific Files
+########################
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Visual Studio settings
+########################
+# Visual Studio / VSCode
+########################
 .vscode/
+!.vscode/extensions.json
 .vs/
+.idea/
+*.sln.iml
 
-# ASP.NET Core secrets
+########################
+# ASP.NET Core Secrets
+########################
 secrets.json
 
-# .NET Core-specific
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
+########################
 # NuGet
+########################
 *.nupkg
 *.snupkg
 packages/
 .nuget/
 
+########################
 # Logs
+########################
 *.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# SQL Server localdb
+########################
+# Environment / Config
+########################
+.env
+*.local
+
+########################
+# Editor / OS-Specific
+########################
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+########################
+# Node / React
+########################
+node_modules/
+build/
+.cache/
+coverage/
+*.tsbuildinfo
+
+########################
+# SQL Server
+########################
 *.mdf
 *.ldf
-
-# Environment files
-.env
-
-# OS / IDE-specific
-Thumbs.db
-.DS_Store
-
-# Rider
-.idea/
-*.sln.iml
