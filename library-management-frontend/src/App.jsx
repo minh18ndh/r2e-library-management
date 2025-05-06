@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from './components/RootLayout';
 import ProtectedLayout from './components/ProtectedLayout';
 import LoginPage from './pages/LoginPage';
-import Home from "./pages/Home";
+import HomePage from "./pages/HomePage";
 
 import AdminBooksPage from "./pages/AdminBooksPage";
 import AdminBookDetailsPage from "./pages/AdminBookDetailsPage";
@@ -34,7 +34,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           {/* Routes accessible by both Admin and User */}
           <Route element={<ProtectedLayout allowedRoles={['Admin', 'User']} />}>
-            <Route path="home" element={<Home />} />
+            <Route path="home" element={<HomePage />} />
           </Route>
 
           {/* Admin-only routes */}
