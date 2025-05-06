@@ -2,8 +2,6 @@ using LibraryManagement.Infrastructure;
 using LibraryManagement.Api.Handlers;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-// using LibraryManagement.Infrastructure.Data;
-// using LibraryManagement.Infrastructure.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -101,11 +99,5 @@ app.UseAuthorization();
 
 // Routing
 app.MapControllers();
-
-// using (var scope = app.Services.CreateScope())
-// {
-//     var dbContext = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
-//     DbSeeder.Seed(dbContext);
-// }
 
 app.Run();
