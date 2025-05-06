@@ -1,4 +1,4 @@
-# Library Management – Backend (ASP.NET Core + EF Core + Clean Architecture)
+# Library Management – Backend (ASP.NET Core + EF Core)
 
 This is the **backend** for the Library Management System. It provides:
 
@@ -30,7 +30,7 @@ Update your connection string in `appsettings.json`:
 }
 ```
 
-### 3. Apply migrations & seed data
+### 3. Apply migrations
 
 ```bash
 dotnet ef database update
