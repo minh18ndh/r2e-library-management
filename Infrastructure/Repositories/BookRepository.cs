@@ -14,12 +14,24 @@ public class BookRepository : IBookRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAllAsync(string? search, string? sort, Guid? categoryId)
     {
-        return await _context.Books
-            .Include(b => b.Category) // Include for CategoryName in DTO
-            .AsNoTracking()
-            .ToListAsync();
+        var query = _context.Books
+            .Include(b => b.Category) // include CategoryName for DTO
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+            query = query.Where(b => b.Title.Contains(search));
+
+        if (categoryId.HasValue)
+            query = query.Where(b => b.CategoryId == categoryId);
+
+        if (sort == "asc")
+            query = query.OrderBy(b => b.Title);
+        else if (sort == "desc")
+            query = query.OrderByDescending(b => b.Title);
+
+        return await query.AsNoTracking().ToListAsync();
     }
 
     public async Task<Book?> GetByIdAsync(Guid id)

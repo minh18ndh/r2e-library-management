@@ -17,9 +17,9 @@ public class CategoryService : ICategoryService
         _bookRepository = bookRepository;
     }
 
-    public async Task<IEnumerable<CategoryResponseDto>> GetAllAsync()
+    public async Task<IEnumerable<CategoryResponseDto>> GetAllAsync(string? search)
     {
-        var categories = await _categoryRepository.GetAllAsync();
+        var categories = await _categoryRepository.GetAllAsync(search);
         return categories.Select(c => c.ToResponseDto());
     }
 

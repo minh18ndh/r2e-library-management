@@ -17,9 +17,9 @@ public class BookService : IBookService
         _bookBorrowingRequestRepository = bookBorrowingRequestRepository;
     }
 
-    public async Task<IEnumerable<BookResponseDto>> GetAllAsync()
+    public async Task<IEnumerable<BookResponseDto>> GetAllAsync(string? search, string? sort, Guid? categoryId)
     {
-        var books = await _bookRepository.GetAllAsync();
+        var books = await _bookRepository.GetAllAsync(search, sort, categoryId);
         return books.Select(b => b.ToResponseDto());
     }
 

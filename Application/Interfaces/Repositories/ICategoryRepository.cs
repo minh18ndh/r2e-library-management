@@ -4,7 +4,7 @@ namespace LibraryManagement.Application.Interfaces.Repositories;
 
 public interface ICategoryRepository
 {
-    Task<IEnumerable<Category>> GetAllAsync();
+    Task<IEnumerable<Category>> GetAllAsync(string? search);
     Task<Category?> GetByIdAsync(Guid id);
     Task<Category> AddAsync(Category category);
     Task<Category?> UpdateAsync(Category category);

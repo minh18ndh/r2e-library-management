@@ -4,7 +4,6 @@ namespace LibraryManagement.Application.Interfaces.Repositories;
 
 public interface IBookBorrowingRequestRepository
 {
- 
     Task<List<BookBorrowingRequest>> GetAllAsync();
     Task<BookBorrowingRequest?> GetByIdAsync(Guid id);
 

@@ -14,11 +14,14 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Category>> GetAllAsync()
+    public async Task<IEnumerable<Category>> GetAllAsync(string? search)
     {
-        return await _context.Categories
-            .AsNoTracking()
-            .ToListAsync();
+        var query = _context.Categories.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+            query = query.Where(c => c.Name.Contains(search));
+
+        return await query.AsNoTracking().ToListAsync();
     }
 
     public async Task<Category?> GetByIdAsync(Guid id)

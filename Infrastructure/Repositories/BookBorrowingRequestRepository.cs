@@ -22,6 +22,7 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
             .Include(r => r.Approver)
             .Include(r => r.Details)
                 .ThenInclude(d => d.Book)
+            .OrderByDescending(r => r.DateRequested)
             .AsNoTracking()
             .ToListAsync();
     }
@@ -44,6 +45,7 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
             .Include(r => r.Approver)
             .Include(r => r.Details)
                 .ThenInclude(d => d.Book)
+            .OrderByDescending(r => r.DateRequested)
             .AsNoTracking()
             .ToListAsync();
     }

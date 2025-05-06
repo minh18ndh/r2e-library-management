@@ -4,7 +4,7 @@ namespace LibraryManagement.Application.Interfaces.Repositories;
 
 public interface IBookRepository
 {
-    Task<IEnumerable<Book>> GetAllAsync();
+    Task<IEnumerable<Book>> GetAllAsync(string? search, string? sort, Guid? categoryId);
     Task<Book?> GetByIdAsync(Guid id);
     Task<Book> AddAsync(Book book);
     Task<Book?> UpdateAsync(Book book);

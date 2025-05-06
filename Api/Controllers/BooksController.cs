@@ -18,9 +18,12 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [FromQuery] string? search,
+        [FromQuery] string? sort,
+        [FromQuery] Guid? categoryId)
     {
-        var books = await _bookService.GetAllAsync();
+        var books = await _bookService.GetAllAsync(search, sort, categoryId);
         return Ok(books);
     }
 
