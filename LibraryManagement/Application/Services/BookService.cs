@@ -40,7 +40,6 @@ public class BookService : IBookService
 
         // Re-fetch full book with Category included
         var fullBook = await _bookRepository.GetByIdAsync(createdBook.Id);
-        //return fullBook!.ToResponseDto(); // use ! to assert it won't be null
 
         if (fullBook == null)
             throw new NotFoundException($"Book with ID '{createdBook.Id}' not found after creation");

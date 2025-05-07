@@ -20,10 +20,10 @@ public class BookBorrowingRequestService : IBookBorrowingRequestService
         _bookRepository = bookRepository;
     }
 
-    public async Task<List<BookBorrowingRequestResponseDto>> GetAllAsync()
+    public async Task<IEnumerable<BookBorrowingRequestResponseDto>> GetAllAsync()
     {
         var requests = await _requestRepository.GetAllAsync();
-        return requests.Select(r => r.ToResponseDto()).ToList();
+        return requests.Select(r => r.ToResponseDto());
     }
 
     public async Task<BookBorrowingRequestResponseDto> GetByIdAsync(Guid id)
@@ -35,10 +35,10 @@ public class BookBorrowingRequestService : IBookBorrowingRequestService
         return request.ToResponseDto();
     }
 
-    public async Task<List<BookBorrowingRequestResponseDto>> GetByRequestorAsync(Guid requestorId)
+    public async Task<IEnumerable<BookBorrowingRequestResponseDto>> GetByRequestorAsync(Guid requestorId)
     {
         var requests = await _requestRepository.GetByRequestorIdAsync(requestorId);
-        return requests.Select(r => r.ToResponseDto()).ToList();
+        return requests.Select(r => r.ToResponseDto());
     }
 
     public async Task<BookBorrowingRequestResponseDto> CreateAsync(BookBorrowingRequestCreateRequestDto dto, Guid requestorId)

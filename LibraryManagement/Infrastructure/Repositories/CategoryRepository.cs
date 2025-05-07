@@ -41,7 +41,8 @@ public class CategoryRepository : ICategoryRepository
         var existingCategory = await _context.Categories.FindAsync(category.Id);
         if (existingCategory == null) return null;
 
-        existingCategory.Name = category.Name;
+        //existingCategory.Name = category.Name;
+        _context.Entry(existingCategory).CurrentValues.SetValues(category);
         await _context.SaveChangesAsync();
         return existingCategory;
     }

@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
                 "https://r2e-library-management-fe.vercel.app",
                 "http://localhost:5173"
-            )
+               )
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -105,7 +105,7 @@ app.UseAuthorization();
 // Routing
 app.MapControllers();
 
- // using (var scope = app.Services.CreateScope())
+ // using (var scope = app.Services.CreateScope())  // uncomment to seed book data
  // {
  //     var dbContext = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
  //     DbSeeder.Seed(dbContext);

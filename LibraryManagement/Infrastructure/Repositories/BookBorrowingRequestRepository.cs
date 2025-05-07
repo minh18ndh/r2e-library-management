@@ -15,7 +15,7 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
         _context = context;
     }
 
-    public async Task<List<BookBorrowingRequest>> GetAllAsync()
+    public async Task<IEnumerable<BookBorrowingRequest>> GetAllAsync()
     {
         return await _context.BookBorrowingRequests
             .Include(r => r.Requestor)
@@ -37,7 +37,7 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
-    public async Task<List<BookBorrowingRequest>> GetByRequestorIdAsync(Guid requestorId)
+    public async Task<IEnumerable<BookBorrowingRequest>> GetByRequestorIdAsync(Guid requestorId)
     {
         return await _context.BookBorrowingRequests
             .Where(r => r.RequestorId == requestorId)
@@ -62,7 +62,7 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
         var existingRequest = await _context.BookBorrowingRequests.FindAsync(request.Id);
         if (existingRequest == null) return null;
 
-        // Only updating status and approver here
+        // Update status and approver
         existingRequest.Status = request.Status;
         existingRequest.ApproverId = request.ApproverId;
 
@@ -72,13 +72,14 @@ public class BookBorrowingRequestRepository : IBookBorrowingRequestRepository
         return existingRequest;
     }
 
-    public async Task<List<BookBorrowingRequest>> GetActiveRequestsByBookIdAsync(Guid bookId)
+    public async Task<IEnumerable<BookBorrowingRequest>> GetActiveRequestsByBookIdAsync(Guid bookId)
     {
         return await _context.BookBorrowingRequests
             .Include(r => r.Details)
             .Where(r =>
                 (r.Status == BorrowRequestStatus.Pending || r.Status == BorrowRequestStatus.Approved) &&
                 r.Details.Any(d => d.BookId == bookId))
+            .AsNoTracking()
             .ToListAsync();
     }
 
