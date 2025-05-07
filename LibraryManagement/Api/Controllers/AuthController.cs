@@ -1,5 +1,6 @@
 using LibraryManagement.Application.DTOs.Auth;
 using LibraryManagement.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagement.API.Controllers;
@@ -18,8 +19,16 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
     {
-        var response = await _authService.RegisterAsync(request);
+        var response = await _authService.RegisterAsync(request, "User");
         return Ok(response);
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost("register-admin")]
+    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterRequestDto request)
+    {
+        var result = await _authService.RegisterAsync(request, "Admin");
+        return Ok(result);
     }
 
     [HttpPost("login")]

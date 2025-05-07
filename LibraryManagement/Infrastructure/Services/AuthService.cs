@@ -2,11 +2,11 @@ using System.Security.Cryptography;
 using System.Text;
 using LibraryManagement.Application.DTOs.Auth;
 using LibraryManagement.Application.Interfaces.Services;
-using LibraryManagement.Domain.Entities;
-using LibraryManagement.Domain.Enums;
 using LibraryManagement.Infrastructure.Data;
 using LibraryManagement.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using LibraryManagement.Application.Extensions;
+using LibraryManagement.Domain.Enums;
 
 namespace LibraryManagement.Infrastructure.Services;
 
@@ -24,20 +24,15 @@ public class AuthService : IAuthService
         _jwtService = jwtService;
     }
 
-    public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request)
+    public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request, string userRole)
     {
+        UserRole role = userRole == "Admin" ? UserRole.Admin : UserRole.User;
+
         var exists = await _context.Users.AnyAsync(u => u.Email == request.Email);
         if (exists)
             throw new BadRequestException("Email already registered.");
 
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            FullName = request.FullName,
-            Email = request.Email,
-            PasswordHash = HashPassword(request.Password),
-            Role = UserRole.User
-        };
+        var user = request.ToEntity(HashPassword(request.Password), role);
 
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
@@ -47,11 +42,7 @@ public class AuthService : IAuthService
 
         _refreshTokens[refreshToken] = user.Id.ToString();
 
-        return new AuthResponseDto
-        {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken
-        };
+        return user.ToResponseDto(accessToken, refreshToken);
     }
 
     public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request)
@@ -65,11 +56,7 @@ public class AuthService : IAuthService
 
         _refreshTokens[refreshToken] = user.Id.ToString();
 
-        return new AuthResponseDto
-        {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken
-        };
+        return user.ToResponseDto(accessToken, refreshToken);
     }
 
     public Task<AuthResponseDto> RefreshTokenAsync(RefreshTokenRequestDto request)
@@ -93,11 +80,7 @@ public class AuthService : IAuthService
         _refreshTokens.Remove(refreshToken);
         _refreshTokens[newRefreshToken] = user.Id.ToString();
 
-        return Task.FromResult(new AuthResponseDto
-        {
-            AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken
-        });
+        return Task.FromResult(user.ToResponseDto(newAccessToken, newRefreshToken));
     }
 
     private string HashPassword(string password)

@@ -18,6 +18,7 @@ import ManageBorrowRequestsPage from './pages/ManageBorrowRequestsPage';
 import MyBorrowRequestsPage from './pages/MyBorrowRequestsPage';
 import BorrowRequestDetailsPage from "./pages/BorrowRequestDetailsPage";
 import RegisterPage from "./pages/RegisterPage";
+import RegisterAdminPage from "./pages/RegisterAdminPage";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="manage-categories/create" element={<CreateCategoryPage />} />
             <Route path="manage-borrow-requests" element={<ManageBorrowRequestsPage />} />
             <Route path="manage-borrow-requests/:id" element={<BorrowRequestDetailsPage />} />
+            <Route path="register-admin" element={<RegisterAdminPage />} />
           </Route>
 
           {/* User-only routes */}
