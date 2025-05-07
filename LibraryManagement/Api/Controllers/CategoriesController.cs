@@ -35,9 +35,6 @@ public class CategoriesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CategoryCreateRequestDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var createdCategory = await _categoryService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = createdCategory.Id }, createdCategory);
     }
@@ -46,9 +43,6 @@ public class CategoriesController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] CategoryUpdateRequestDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var updatedCategory = await _categoryService.UpdateAsync(id, dto); // throws NotFoundException if not found
         return Ok(updatedCategory);
     }
@@ -57,7 +51,7 @@ public class CategoriesController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await _categoryService.DeleteAsync(id); // may throws NotFoundException or BadRequestException inside service depends
+        await _categoryService.DeleteAsync(id); // might throw NotFoundException or BadRequestException inside service depends
         return Ok(new { message = $"Category with ID '{id}' deleted." });
     }
 }

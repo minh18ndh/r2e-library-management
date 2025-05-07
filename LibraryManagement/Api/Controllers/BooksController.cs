@@ -38,9 +38,6 @@ public class BooksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] BookCreateRequestDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var createdBook = await _bookService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, createdBook);
     }
@@ -49,9 +46,6 @@ public class BooksController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] BookUpdateRequestDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var updatedBook = await _bookService.UpdateAsync(id, dto);
         return Ok(updatedBook);
     }

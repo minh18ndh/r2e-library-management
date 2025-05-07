@@ -36,9 +36,6 @@ public class MyBorrowRequestsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] BookBorrowingRequestCreateRequestDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var requestorId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var created = await _service.CreateAsync(dto, requestorId);
         return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);

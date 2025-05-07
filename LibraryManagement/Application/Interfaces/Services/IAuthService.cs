@@ -1,5 +1,4 @@
 using LibraryManagement.Application.DTOs.Auth;
-using LibraryManagement.Domain.Enums;
 
 namespace LibraryManagement.Application.Interfaces.Services;
 

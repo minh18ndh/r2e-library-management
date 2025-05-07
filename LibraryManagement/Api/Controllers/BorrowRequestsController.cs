@@ -35,9 +35,6 @@ public class BorrowRequestsController : ControllerBase
     [HttpPut("{id:guid}/status")]
     public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] BookBorrowingRequestUpdateStatusRequestDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var approverId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var updated = await _service.UpdateStatusAsync(id, dto, approverId);
         return Ok(updated);
