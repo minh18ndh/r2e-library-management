@@ -35,22 +35,6 @@ public class BorrowRequestsControllerTests
     }
 
     [Test]
-    public async Task GetAll_ReturnsOkWithRequests()
-    {
-        var requests = new List<BookBorrowingRequestResponseDto>
-        {
-            new() { Id = Guid.NewGuid(), Status = Domain.Enums.BorrowRequestStatus.Pending }
-        };
-
-        _serviceMock.Setup(s => s.GetAllAsync()).ReturnsAsync(requests);
-
-        var result = await _controller.GetAll() as OkObjectResult;
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result!.Value, Is.EqualTo(requests));
-    }
-
-    [Test]
     public async Task GetById_ReturnsOkWithRequest()
     {
         var request = new BookBorrowingRequestResponseDto
@@ -68,15 +52,25 @@ public class BorrowRequestsControllerTests
     }
 
     [Test]
-    public async Task UpdateStatus_InvalidModelState_ReturnsBadRequest()
+    public async Task UpdateStatus_ReturnsOkWithUpdatedRequest()
     {
-        _controller.ModelState.AddModelError("Status", "Required");
+        var requestId = Guid.NewGuid();
+        var dto = new BookBorrowingRequestUpdateStatusRequestDto
+        {
+            Status = Domain.Enums.BorrowRequestStatus.Approved
+        };
 
-        var dto = new BookBorrowingRequestUpdateStatusRequestDto();
+        var updated = new BookBorrowingRequestResponseDto
+        {
+            Id = requestId,
+            Status = dto.Status
+        };
 
-        var result = await _controller.UpdateStatus(Guid.NewGuid(), dto) as BadRequestObjectResult;
+        _serviceMock.Setup(s => s.UpdateStatusAsync(requestId, dto, _adminId)).ReturnsAsync(updated);
+
+        var result = await _controller.UpdateStatus(requestId, dto) as OkObjectResult;
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result!.StatusCode, Is.EqualTo(400));
+        Assert.That(result!.Value, Is.EqualTo(updated));
     }
 }

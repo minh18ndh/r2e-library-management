@@ -51,7 +51,7 @@ public class AuthServiceTests
             Password = "pass"
         };
 
-        Assert.ThrowsAsync<BadRequestException>(() => _authService.RegisterAsync(dto));
+        Assert.ThrowsAsync<BadRequestException>(() => _authService.RegisterAsync(dto, "User"));
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class AuthServiceTests
             Password = "pass123"
         };
 
-        var result = await _authService.RegisterAsync(dto);
+        var result = await _authService.RegisterAsync(dto, "User");
 
         Assert.That(result.AccessToken, Is.EqualTo("access-token"));
         Assert.That(result.RefreshToken, Is.EqualTo("refresh-token"));

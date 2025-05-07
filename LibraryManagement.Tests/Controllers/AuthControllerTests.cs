@@ -20,7 +20,7 @@ public class AuthControllerTests
     }
 
     [Test]
-    public async Task Register_ReturnsOkWithTokens()
+    public async Task RegisterUser_ReturnsOkWithTokens()
     {
         // Arrange
         var request = new RegisterRequestDto
@@ -36,10 +36,38 @@ public class AuthControllerTests
             RefreshToken = "refresh-token"
         };
 
-        _authServiceMock.Setup(x => x.RegisterAsync(request)).ReturnsAsync(expected);
+        _authServiceMock.Setup(x => x.RegisterAsync(request, "User")).ReturnsAsync(expected);
 
         // Act
         var result = await _controller.Register(request);
+
+        // Assert
+        var okResult = result as OkObjectResult;
+        Assert.IsNotNull(okResult);
+        Assert.That(okResult!.Value, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public async Task RegisterAdmin_ReturnsOkWithTokens()
+    {
+        // Arrange
+        var request = new RegisterRequestDto
+        {
+            FullName = "Test Admin",
+            Email = "test@mail.com",
+            Password = "123456"
+        };
+
+        var expected = new AuthResponseDto
+        {
+            AccessToken = "access-token",
+            RefreshToken = "refresh-token"
+        };
+
+        _authServiceMock.Setup(x => x.RegisterAsync(request, "Admin")).ReturnsAsync(expected);
+
+        // Act
+        var result = await _controller.RegisterAdmin(request);
 
         // Assert
         var okResult = result as OkObjectResult;
