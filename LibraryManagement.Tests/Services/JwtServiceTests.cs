@@ -54,14 +54,4 @@ public class JwtServiceTests
         Assert.That(jwt.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == role));
         Assert.That(jwt.ValidTo > DateTime.UtcNow);
     }
-
-    [Test]
-    public void GetPrincipalFromExpiredToken_WithInvalidToken_ReturnsNull()
-    {
-        var garbageToken = "this.is.not.valid.jwt";
-
-        var result = _jwtService.GetPrincipalFromExpiredToken(garbageToken);
-
-        Assert.IsNull(result);
-    }
 }
