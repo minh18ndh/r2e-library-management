@@ -50,34 +50,4 @@ public class JwtService : IJwtService
         rng.GetBytes(randomNumber);
         return Convert.ToBase64String(randomNumber);
     }
-
-    public ClaimsPrincipal? GetPrincipalFromExpiredToken(string accessToken)
-    {
-        var tokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateAudience = false,
-            ValidateIssuer = false,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key)),
-            ValidateLifetime = true // expiration
-        };
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-        try
-        {
-            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out var securityToken);
-
-            if (securityToken is not JwtSecurityToken jwtSecurityToken ||
-                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return null;
-            }
-
-            return principal;
-        }
-        catch
-        {
-            return null;
-        }
-    }
 }
